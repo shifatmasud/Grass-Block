@@ -53,7 +53,7 @@ const GrassScene = () => {
 
         {/* Terrain Base with Baked Density */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-          <planeGeometry args={[40, 40, 64, 64]} />
+          <planeGeometry args={[20, 20, 64, 64]} />
           <meshStandardMaterial 
             color="#2d1e16" 
             roughness={0.9} 
@@ -63,7 +63,7 @@ const GrassScene = () => {
 
         <Suspense fallback={null}>
           <GrassSystem
-            size={40}
+            size={20}
             density={density}
             baseColor={baseColor}
             tipColor={tipColor}

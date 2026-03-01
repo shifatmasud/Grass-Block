@@ -2,6 +2,7 @@ import React, { useRef, useMemo, useEffect } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { createWindNoiseTexture, createBlueNoiseTexture, createDensityTexture } from '../../src/utils/textures';
+import { createGrassGeometry } from './GrassBlade';
 
 // --- SHADER CODE ---
 const grassVertexShader = `
@@ -157,29 +158,6 @@ const grassFragmentShader = `
     if (vVisibility < 0.01) discard;
   }
 `;
-
-// --- GEOMETRY GENERATION ---
-function createGrassGeometry() {
-  const width = 0.08;
-  const height = 1.0;
-  const segments = 4;
-
-  const geometry = new THREE.PlaneGeometry(width, height, 1, segments);
-  geometry.translate(0, height / 2, 0);
-
-  const positions = geometry.attributes.position.array;
-  for (let i = 0; i < positions.length; i += 3) {
-    const x = positions[i];
-    const y = positions[i + 1];
-    const taper = 1.0 - Math.pow(y / height, 1.2); 
-    positions[i] = x * taper;
-    const bend = Math.pow(y / height, 2) * 0.15;
-    positions[i + 2] -= bend;
-  }
-  
-  geometry.computeVertexNormals();
-  return geometry;
-}
 
 // --- GRASS PATCH COMPONENT ---
 interface GrassPatchProps {
